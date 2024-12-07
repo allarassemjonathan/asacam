@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASACAM | Alerts</title>
+    <link rel="stylesheet" href="/static/tailwindcss/output.css" />
+  </head>
+  <body class="dark">
+    <main
+      class="h-screen md:max-h-screen w-screen flex flex-col items-center py-4 px-4 md:px-8 space-y-4"
+    >
+      <header class="w-full flex justify-between items-center">
+        <div class="flex items-center gap-x-16">
+          <a href="/"><h2>ASACAM</h2></a>
+          <nav class="hidden gap-4 text-sm font-medium md:flex">
+            <a class="hover:text-accent" href="/"> Home </a>
+            <a class="hover:text-accent" href="/dashboard"> Dashboard </a>
+            <a class="hover:text-accent" href="/activity">
+              Activity
+            </a>
+            <a class="hover:text-accent" href="/alerts">
+              Alerts
+            </a>
+            <a class="hover:text-accent" href="settings">
+              Settings
+            </a>
+          </nav>
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full"
+            type="button"
+          >
+            <img
+              width="32"
+              height="32"
+              alt="Avatar"
+              class="rounded-full"
+              src="/static/assets/avatar.png"
+              style="aspect-ratio: 32 / 32; object-fit: cover;"
+            />
+          </button>
+        </div>
+      </header>
+
+      <!-- Filter Section -->
+      <section class="w-full mb-6">
+        <h3 class="text-xl font-semibold mb-4">Filter Alerts</h3>
+        <div class="flex space-x-4">
+          <select id="alertTypeFilter" class="">
+            <option value="">All Alert Types</option>
+            <option value="Motion Detected">Motion Detected</option>
+            <option value="Intrusion">Intusion</option>
+            <option value="System Check">System Check</option>
+            <option value="Suspicious Activity">Suspicious Activity</option>
+          </select>
+          <button id="filterButton" class="button default sm">
+            Apply Filter
+          </button>
+        </div>
+      </section>
+
+      <!-- Event Logs Table -->
+      <section class="w-full">
+        <h3 class="text-xl font-semibold mb-4">Event Logs</h3>
+        <div class="overflow-x-auto card">
+          <table class="min-w-full table-auto">
+            <thead>
+              <tr class="text-left border-b border-accent">
+                <th class="px-4 py-2">Alert Date</th>
+                <th class="px-4 py-2">Alert Type</th>
+                <th class="px-4 py-2">Description</th>
+              </tr>
+            </thead>
+            <tbody id="eventLogBody">
+              <!-- Mock Data Rows -->
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-01 12:34</td>
+                <td class="px-4 py-2">
+                  <span
+                    class="bg-yellow-500 text-black text-sm px-2 py-1 rounded"
+                    >Motion Detected</span
+                  >
+                </td>
+                <td class="px-4 py-2">
+                  Movement detected in the north corridor
+                </td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-02 09:18</td>
+                <td class="px-4 py-2">
+                  <span class="bg-red-500 text-white text-sm px-2 py-1 rounded"
+                    >Intrusion</span
+                  >
+                </td>
+                <td class="px-4 py-2">
+                  Unauthorized access in the main gate area
+                </td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-03 14:21</td>
+                <td class="px-4 py-2">
+                  <span class="bg-blue-500 text-white text-sm px-2 py-1 rounded"
+                    >System Check</span
+                  >
+                </td>
+                <td class="px-4 py-2">Security cameras tested successfully</td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-04 08:45</td>
+                <td class="px-4 py-2">
+                  <span
+                    class="bg-yellow-500 text-black text-sm px-2 py-1 rounded"
+                    >Suspicious Activity</span
+                  >
+                </td>
+                <td class="px-4 py-2">Unusual movement near the parking lot</td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-05 11:15</td>
+                <td class="px-4 py-2">
+                  <span class="bg-red-500 text-white text-sm px-2 py-1 rounded"
+                    >Intrusion</span
+                  >
+                </td>
+                <td class="px-4 py-2">Door forced open in restricted area</td>
+              </tr>
+
+              <!-- Additional Rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+
+    <script>
+      // Filter functionality
+      document
+        .getElementById("filterButton")
+        .addEventListener("click", function () {
+          const alertType = document.getElementById("alertTypeFilter").value;
+          const rows = document.querySelectorAll("#eventLogBody tr");
+
+          rows.forEach((row) => {
+            const eventTypeCell = row
+              .querySelector("td:nth-child(2) span")
+              .textContent.trim(); // Get the text content of the alert type
+            if (alertType === "" || eventTypeCell === alertType) {
+              row.style.display = ""; // Show row
+            } else {
+              row.style.display = "none"; // Hide row
+            }
+          });
+        });
+    </script>
+  </body>
+</html>

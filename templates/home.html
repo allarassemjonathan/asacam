@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ASACAM | Home</title>
+    <link rel="stylesheet" href="/static/tailwindcss/output.css" />
+</head>
+<body class="dark">
+    <main class="h-screen max-h-screen w-screen overflow-hidden flex flex-col items-center py-4 px-4 md:px-8 space-y-4 relative z-40">
+        <header class="w-screen flex justify-between items-center bg-background z-40 pb-4 px-4 md:px-8">
+            <div class="flex items-center gap-x-16">
+            <a href="/"><h2>ASACAM</h2></a>
+            <nav class="hidden gap-4 text-sm font-medium md:flex">
+                <a class="hover:text-accent" href="/"> Home </a>
+                <!-- <a class="hover:text-accent" href="/dashboard"> Dashboard </a>
+                <a class="hover:text-accent" href="/activity">
+                    Activity
+                </a>
+                <a class="hover:text-accent" href="/alerts">
+                Alerts
+                </a> -->
+                <a class="hover:text-accent" href="settings">
+                Settings
+                </a>
+            </nav>
+            </div>
+            <div class="flex gap-2">
+            <button
+                class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full"
+                type="button"
+            >
+                <img
+                width="32"
+                height="32"
+                alt="Avatar"
+                class="rounded-full"
+                src="/static/assets/avatar.png"
+                style="aspect-ratio: 32 / 32; object-fit: cover;"
+                />
+            </button>
+            </div>
+        </header>
+        <canvas id="flickeringGrid" class="w-full h-screen absolute top-0 left-0 -z-40"></canvas>
+        <div class="h-full flex flex-col justify-center items-center space-y-4 z-40">
+            <h1>Welcome to Asacam</h1>
+            <div class="flex justify-center items-center gap-x-4">
+                <button class="button default" onclick="openMissionDialog()">Start Mission</button>
+                <button class="button default" onclick="seeOldMissions()">Past Missions</button>
+            </div>
+        </div>
+    </main>
+    <!-- Modal for Mission Information -->
+    <div id="mission-dialog" class="fixed inset-0 hidden items-center justify-center bg-black bg-opacity-50 z-50">
+        <div class="card p-8 rounded shadow-lg space-y-4 w-96">
+            <h2 class="text-lg font-semibold">Start a New Mission</h2>
+            <label>
+                Mission Title:
+                <input type="text" id="mission-title-input" class="input default w-full" placeholder="Enter mission title" required />
+            </label>
+            <label>
+                Reporter Name:
+                <input type="text" id="reporter-name-input" class="input default w-full" placeholder="Enter your name" required />
+            </label>
+            <label>
+                Reporter Email:
+                <input type="email" id="mission-email-input" class="input default w-full" placeholder="Enter your email" required />
+            </label>
+            <label>
+                Mission Prompt: <br>
+                <textarea id="mission-prompt-input" class="input default w-full h-full rounded" placeholder="Describe the image with military rigor. Short and precise." maxlength="70"></textarea>
+            </label>
+            <label>
+                Mission Date:
+                <input type="date" id="mission-date-input" class="input default w-full" />
+            </label>
+            <div class="flex justify-end gap-4">
+                <button class="button destructive sm" onclick="closeMissionDialog()">Cancel</button>
+                <button class="button default sm" onclick="submitMission()">Start</button>
+            </div>
+        </div>
+    </div>
+    <script>
+        // Open modal for starting mission
+        function openMissionDialog() {
+            // Set the current date by default
+            const today = new Date().toISOString().split('T')[0];
+            document.getElementById('mission-date-input').value = today;
+            // Show the modal dialog
+            document.getElementById('mission-dialog').classList.remove('hidden');
+            document.getElementById('mission-dialog').classList.add('flex');
+        }
+        // Close modal without action
+        function closeMissionDialog() {
+            document.getElementById('mission-dialog').classList.add('hidden');
+            document.getElementById('mission-dialog').classList.remove('flex');
+        }
+        // Submit mission details and display them
+        function submitMission() {
+            // Get form values
+            const title = document.getElementById('mission-title-input').value;
+            const reporter = document.getElementById('reporter-name-input').value;
+            const date = document.getElementById('mission-date-input').value;
+            const email = document.getElementById('mission-email-input').value;
+            const prompt = document.getElementById('mission-prompt-input').value;
+            if (!title || !reporter || !date) {
+                alert('Please fill out all fields.');
+                return;
+            }
+            // Show the mission details section
+            // document.getElementById('mission-details').classList.remove('hidden'); Comment because not needed
+            // Send data to mission page
+            // Store data in localStorage or pass via URL parameters
+            localStorage.setItem('missionTitle', title);
+            localStorage.setItem('missionReporter', reporter);
+            localStorage.setItem('missionDate', date);
+            localStorage.setItem('missionEmail', email);
+            localStorage.setItem('missionPrompt', prompt);
+            // Close the dialog
+            closeMissionDialog();
+            window.location.href = "/mission"
+        }
+        function seeOldMissions() {
+            window.location.href = '/old_missions';
+        }
+        // document.addEventListener("DOMContentLoaded", () => {
+        // const squareSize = 4;
+        // const gridGap = 6;
+        // const flickerChance = 0.3;
+        // const color = "rgb(225, 225, 225)";
+        // const maxOpacity = 0.3;
+        // const canvas = document.getElementById("flickeringGrid");
+        // const ctx = canvas.getContext("2d");
+        // const setupCanvas = () => {
+        //     const dpr = window.devicePixelRatio || 1;
+        //     const canvasWidth = canvas.parentElement.clientWidth;
+        //     const canvasHeight = canvas.parentElement.clientHeight;
+        //     canvas.width = canvasWidth * dpr;
+        //     canvas.height = canvasHeight * dpr;
+        //     canvas.style.width = `${canvasWidth}px`;
+        //     canvas.style.height = `${canvasHeight}px`;
+        //     const cols = Math.floor(canvasWidth / (squareSize + gridGap));
+        //     const rows = Math.floor(canvasHeight / (squareSize + gridGap));
+        //     const squares = new Float32Array(cols * rows);
+        //     for (let i = 0; i < squares.length; i++) {
+        //     squares[i] = Math.random() * maxOpacity;
+        //     }
+        //     return { width: canvasWidth, height: canvasHeight, cols, rows, squares, dpr };
+        // };
+        // const updateSquares = (squares, deltaTime) => {
+        //     for (let i = 0; i < squares.length; i++) {
+        //     if (Math.random() < flickerChance * deltaTime) {
+        //         squares[i] = Math.random() * maxOpacity;
+        //     }
+        //     }
+        // };
+        // const drawGrid = (ctx, width, height, cols, rows, squares, dpr) => {
+        //     ctx.clearRect(0, 0, width, height);
+        //     for (let i = 0; i < cols; i++) {
+        //     for (let j = 0; j < rows; j++) {
+        //         const opacity = squares[i * rows + j];
+        //         ctx.fillStyle = `rgba(225, 225, 225, ${opacity})`;
+        //         ctx.fillRect(
+        //         i * (squareSize + gridGap) * dpr,
+        //         j * (squareSize + gridGap) * dpr,
+        //         squareSize * dpr,
+        //         squareSize * dpr
+        //         );
+        //     }
+        //     }
+        // };
+        // let { width, height, cols, rows, squares, dpr } = setupCanvas();
+        // let lastTime = 0;
+        // const animate = (time) => {
+        //     const deltaTime = (time - lastTime) / 1000;
+        //     lastTime = time;
+        //     updateSquares(squares, deltaTime);
+        //     drawGrid(ctx, width * dpr, height * dpr, cols, rows, squares, dpr);
+        //     requestAnimationFrame(animate);
+        // };
+        // const handleResize = () => {
+        //     ({ width, height, cols, rows, squares, dpr } = setupCanvas());
+        // };
+        // window.addEventListener("resize", handleResize);
+        // requestAnimationFrame(animate);
+        // });
+    </script>
+</body>
+</html>

@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ASACAM | Activity</title>
+    <link rel="stylesheet" href="/static/tailwindcss/output.css" />
+  </head>
+  <body class="dark">
+    <main
+      class="h-screen md:max-h-screen w-screen flex flex-col items-center py-4 px-4 md:px-8 space-y-4"
+    >
+      <header class="w-full flex justify-between items-center">
+        <div class="flex items-center gap-x-16">
+
+          <a href="/"><h2>ASACAM</h2></a>
+          <nav class="hidden gap-4 text-sm font-medium md:flex">
+            <a class="hover:text-accent" href="/"> Home </a>
+            <a class="hover:text-accent" href="/dashboard"> Dashboard </a>
+            <a class="hover:text-accent" href="/activity">
+              Activity
+            </a>
+            <a class="hover:text-accent" href="/alerts">
+              Alerts
+            </a>
+            <a class="hover:text-accent" href="settings">
+              Settings
+            </a>
+          </nav>
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full"
+            type="button"
+          >
+            <img
+              width="32"
+              height="32"
+              alt="Avatar"
+              class="rounded-full"
+              src="/static/assets/avatar.png"
+              style="aspect-ratio: 32 / 32; object-fit: cover;"
+            />
+          </button>
+        </div>
+      </header>
+
+      <!-- Mission Table -->
+      <section class="w-full mt-6">
+        <h3 class="text-xl font-semibold mb-4">All Missions</h3>
+        <div class="overflow-x-auto card">
+          <table class="min-w-full table-auto">
+            <thead>
+              <tr class="text-left border-b border-accent">
+                <th class="px-4 py-2">Mission Date</th>
+                <th class="px-4 py-2">Reporter</th>
+                <th class="px-4 py-2">Title</th>
+                <th class="px-4 py-2">Report Generated</th>
+                <th class="px-4 py-2">Validated</th>
+              </tr>
+            </thead>
+            <tbody>
+              <!-- Mock Data Rows -->
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-01</td>
+                <td class="px-4 py-2">John Doe</td>
+                <td class="px-4 py-2">Mission Alpha</td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-green-500 text-white text-sm px-2 py-1 rounded">Yes</span>
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-green-500 text-white text-sm px-2 py-1 rounded">Validated</span>
+                </td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-02</td>
+                <td class="px-4 py-2">Jane Smith</td>
+                <td class="px-4 py-2">Mission Beta</td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-red-500 text-white text-sm px-2 py-1 rounded">No</span>
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-gray-500 text-white text-sm px-2 py-1 rounded">Pending</span>
+                </td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-03</td>
+                <td class="px-4 py-2">Emily Johnson</td>
+                <td class="px-4 py-2">Mission Gamma</td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-green-500 text-white text-sm px-2 py-1 rounded">Yes</span>
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-green-500 text-white text-sm px-2 py-1 rounded">Validated</span>
+                </td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-04</td>
+                <td class="px-4 py-2">Michael Brown</td>
+                <td class="px-4 py-2">Mission Delta</td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-red-500 text-white text-sm px-2 py-1 rounded">No</span>
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-gray-500 text-white text-sm px-2 py-1 rounded">Pending</span>
+                </td>
+              </tr>
+
+              <tr class="border-b border-accent">
+                <td class="px-4 py-2">2024-10-05</td>
+                <td class="px-4 py-2">Jessica White</td>
+                <td class="px-4 py-2">Mission Epsilon</td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-green-500 text-white text-sm px-2 py-1 rounded">Yes</span>
+                </td>
+                <td class="px-4 py-2 text-center">
+                  <span class="bg-green-500 text-white text-sm px-2 py-1 rounded">Validated</span>
+                </td>
+              </tr>
+
+              <!-- Additional Rows as needed -->
+            </tbody>
+          </table>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>

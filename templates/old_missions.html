@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Past Missions</title>
+    <link rel="stylesheet" href="/static/tailwindcss/output.css" />
+  </head>
+  <style>
+  </style>
+
+  <body class="dark">
+    <main class="h-screen md:max-h-screen w-screen flex flex-col items-center py-4 px-4 md:px-8 space-y-4">
+      <!-- Header Section -->
+      <header class="w-full flex justify-between">
+        <div class="flex items-center gap-x-16">
+          <a href="/"><h2>ASACAM</h2></a>
+          <nav class="hidden gap-4 text-sm font-medium md:flex">
+            <a class="hover:text-accent" href="/"> Home </a>
+            <a class="hover:text-accent" href="/dashboard"> Dashboard </a>
+            <a class="hover:text-accent" href="/activity">
+              Activity
+            </a>
+            <a class="hover:text-accent" href="/alerts">
+              Alerts
+            </a>
+            <a class="hover:text-accent" href="settings">
+              Settings
+            </a>
+          </nav>
+        </div>
+        <div class="flex gap-2">
+          <button
+            class="inline-flex items-center justify-center whitespace-nowrap text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 hover:bg-accent hover:text-accent-foreground h-10 w-10 rounded-full"
+            type="button"
+          >
+            <img
+              width="32"
+              height="32"
+              alt="Avatar"
+              class="rounded-full"
+              src="/static/assets/avatar.png"
+              style="aspect-ratio: 32 / 32; object-fit: cover;"
+            />
+          </button>
+        </div>
+      </header>
+      <section class="w-full mt-8 bg-accent p-6 rounded-lg shadow-lg">
+        <!-- Missions Data -->
+        <div class="bg-accent p-6 rounded-lg shadow-lg justify-centerborder-0">
+         <div id="mission-details" class="mt-4 flex flex-col items-center border-0">
+            <h4 id="mission-title">Mission Title: Search and rescue</h4>
+            <div class="flex gap-x-2">
+                <p id="mission-reporter">Mission Reporter: Abdoulaye Diallo</p>
+                <div>|</div>
+                <p id="mission-date">Mission Date: 2024-11-07</p>
+            </div>
+          </div>
+          <div style="margin-bottom: 20px;" class="space-y-4">
+            <h2></h2>
+            <div class="grid grid-cols-5 gap-4">
+                <div class="col-span-3">
+                    <video controls class="object-cover border-0 outline-none rounded-lg bg-accent" autoplay muted>
+                        <source src="https://allarassemjonathan.github.io/api/cam_com.mp4" type="video/mp4">
+                        Your browser does not support the video tag.
+                    </video>
+                    <!-- Link to the report -->
+                </div>
+
+                <div class="col-span-2">
+                    <iframe src="https://allarassemjonathan.github.io/api/report.pdf" class="border-0 rounded-lg w-full h-full">
+                        Report
+                    </iframe>
+                </div>   
+            </div>
+            <br>
+            
+        </div>
+      </section>
+    </main>
+    <!-- Mock Charting with Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script>
+      // Mock Reports Per Reporter Chart
+      const reportsCtx = document.getElementById('reportsChart').getContext('2d');
+      new Chart(reportsCtx, {
+        type: 'bar',
+        data: {
+          labels: ['Reporter 1', 'Reporter 2', 'Reporter 3', 'Reporter 4'],
+          datasets: [{
+            label: '# of Reports',
+            data: [12, 19, 3, 5],
+            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+            borderColor: 'rgba(75, 192, 192, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+            plugins: {
+            legend: {
+              display: true,
+              position: 'right',
+              align:'start',
+              maxWidth: 160,
+            }
+        },
+            scales: {
+            y: {
+              beginAtZero: true
+            }
+          }
+        }
+      });
+      // Mock Validated Reports Chart
+      const validatedReportsCtx = document.getElementById('validatedReportsChartCanvas').getContext('2d');
+      new Chart(validatedReportsCtx, {
+        type: 'line',
+        data: {
+          labels: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'],
+          datasets: [{
+            label: 'Validated Reports',
+            data: [15, 12, 20, 10, 25],
+            backgroundColor: 'rgba(153, 102, 255, 0.2)',
+            borderColor: 'rgba(153, 102, 255, 1)',
+            borderWidth: 1
+          }]
+        },
+        options: {
+          plugins: {
+            legend: {
+              display: true,
+              position: 'right',
+              align:'start',
+              maxWidth: 160,
+            }
+          },
+          scales: {
+            y: {
+              beginAtZero: true
+            }
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
